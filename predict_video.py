@@ -82,7 +82,7 @@ def main():
             road_pred = torch.sigmoid(road_out).squeeze().cpu().numpy()
             lane_pred = torch.sigmoid(lane_out).squeeze().cpu().numpy()
             
-        road_mask = (road_pred > 0.5).astype(np.uint8)
+        road_mask = (road_pred > 0.2).astype(np.uint8)
         lane_mask = (lane_pred > 0.4).astype(np.uint8)
 
         # ====== GIAI ĐOẠN RENDER VÀO FRAME ======
@@ -97,10 +97,8 @@ def main():
                                 cv2.addWeighted(img_combined, 0.5, green_overlay, 0.5, 0), 
                                 img_combined)
         
-        # 2. Quét vạch Đỏ (Chỉ trong/gần rìa vùng xanh)
-        road_expanded = cv2.dilate(road_mask, kernel_dilate, iterations=5)
-        valid_lanes = (lane_mask_dilated == 1) & (road_expanded == 1)
-        img_combined[valid_lanes] = [0, 0, 255] # Red
+        # 2. Quét vạch Đỏ (Vẽ tất cả vạch tìm được)
+        img_combined[lane_mask_dilated == 1] = [0, 0, 255] # Red
 
         # Scale lại bằng 100% video gốc
         final_frame = cv2.resize(img_combined, (width, height))

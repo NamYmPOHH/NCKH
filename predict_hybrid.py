@@ -119,7 +119,7 @@ def main():
             road_pred = predict_single_model(tensor, road_model)
             lane_pred = predict_single_model(tensor, lane_model)
             
-            road_mask = (road_pred > 0.5).astype(np.uint8)
+            road_mask = (road_pred > 0.2).astype(np.uint8)
             lane_mask = (lane_pred > 0.4).astype(np.uint8)
 
             # RENDER: Ảnh chỉ có Vạch kẻ (Lane Only -> testlane)
@@ -138,10 +138,8 @@ def main():
             mask_3ch = np.stack([road_mask]*3, axis=-1)
             img_combined = np.where(mask_3ch == 1, cv2.addWeighted(img_combined, 0.5, green_overlay, 0.5, 0), img_combined)
             
-            # Vẽ vạch sau (ép vạch lên đường hoặc rìa đường)
-            road_expanded = cv2.dilate(road_mask, kernel_dilate, iterations=5)
-            valid_lanes = (lane_mask_dilated == 1) & (road_expanded == 1)
-            img_combined[valid_lanes] = [0, 0, 255] # Red
+            # Vẽ vạch sau (Vẽ tất cả các vạch tìm được)
+            img_combined[lane_mask_dilated == 1] = [0, 0, 255] # Red
             
             out_combined = cv2.resize(img_combined, (original_size[1], original_size[0]))
             cv2.imwrite(os.path.join(result_combined, img_name), out_combined)
