@@ -4,3 +4,15 @@ train_colab_log.txt
 
 .\venv_new\Scripts\python.exe train_lane.py --dataset_path LaneDataset
 .\venv_new\Scripts\python.exe train_colab.py --dataset_path Dataset
+
+## Run ui app 
+    python .\ui_app\ui_app.py
+
+## Git
+    .\venv_new\Scripts\python.exe -m pip install --upgrade pip
+    .\venv_new\Scripts\pip install --upgrade setuptools
+    .\venv_new\Scripts\pip install pyinstaller
+    .\venv_new\Scripts\pyinstaller --noconfirm --onefile --windowed
+
+## Predict_video
+    .\venv_new\Scripts\python.exe .\predict_video.py --input .\test_video.mp4

@@ -19,11 +19,14 @@ def prepare_tensor(img_resized, device, mean, std):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--input', type=str, required=True, help="Đường dẫn file video đầu vào (.mp4)")
-    parser.add_argument('--output', type=str, default="output_video.mp4", help="Đường dẫn video kết quả (.mp4)")
+    parser.add_argument('--input', type=str, required=True, help="Duong dan file video dau vao (.mp4)")
+    parser.add_argument('--output', type=str, default="result/result_video/result_video.mp4", help="Duong dan video ket qua (.mp4)")
     parser.add_argument('--road_weights', type=str, default="road_model.pth")
     parser.add_argument('--lane_weights', type=str, default="lane_model.pth")
     args = parser.parse_args()
+
+    # Tao thu muc result neu chua co
+    os.makedirs(os.path.dirname(args.output), exist_ok=True)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f" Khoi tao Render Video Dual-Model tren GPU: {device}")

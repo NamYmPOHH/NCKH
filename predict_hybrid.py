@@ -36,10 +36,10 @@ def main():
     MEAN = np.array([0.485, 0.456, 0.406])
     STD = np.array([0.229, 0.224, 0.225])
     
-    # 3 Thư mục kết quả
-    result_road = "result_hybrid/testroad"
-    result_lane = "result_hybrid/testlane"
-    result_combined = "result_hybrid/test"
+    # Thư mục kết quả mới
+    result_road = "result/result_road"
+    result_lane = "result/result_lane"
+    result_combined = "result/result_train"
     os.makedirs(result_road, exist_ok=True)
     os.makedirs(result_lane, exist_ok=True)
     os.makedirs(result_combined, exist_ok=True)
