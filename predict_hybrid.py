@@ -119,7 +119,7 @@ def main():
             road_pred = predict_single_model(tensor, road_model)
             lane_pred = predict_single_model(tensor, lane_model)
             
-            road_mask = (road_pred > 0.5).astype(np.uint8)
+            road_mask = (road_pred > 0.2).astype(np.uint8)
             lane_mask = (lane_pred > 0.4).astype(np.uint8)
 
             # RENDER: Ảnh chỉ có Vạch kẻ (Lane Only -> testlane)

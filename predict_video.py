@@ -82,7 +82,7 @@ def main():
             road_pred = torch.sigmoid(road_out).squeeze().cpu().numpy()
             lane_pred = torch.sigmoid(lane_out).squeeze().cpu().numpy()
             
-        road_mask = (road_pred > 0.5).astype(np.uint8)
+        road_mask = (road_pred > 0.2).astype(np.uint8)
         lane_mask = (lane_pred > 0.4).astype(np.uint8)
 
         # ====== GIAI ĐOẠN RENDER VÀO FRAME ======
