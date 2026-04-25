@@ -15,7 +15,7 @@ def train():
     args = parser.parse_args()
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print(f"🚀 Training Binary Lane Model (Vạch kẻ) trên: {device}")
+    print(f"Training Binary Lane Model (Vach ke) tren: {device}")
 
     # Khởi tạo mô hình Lane
     model = LaneSegModel().to(device)
@@ -23,12 +23,12 @@ def train():
     # Nạp lại weights nếu tiếp tục học
     weights_path = "lane_model.pth"
     if args.resume and os.path.exists(weights_path):
-        print("🔄 Đang nạp lại mô hình cũ để học tiếp...")
+        print("Dang nap lai mo hinh cu de hoc tiep...")
         try:
             model.load_state_dict(torch.load(weights_path, map_location=device))
-            print("✅ Đã nạp thành công bộ não cũ.")
+            print("Da nap thanh cong bo nao cu.")
         except Exception as e:
-            print(f"⚠️ Lỗi nạp weights: {e}")
+            print(f"Loi nap weights: {e}")
 
     # Khởi tạo DataLoader
     try:
@@ -36,7 +36,7 @@ def train():
         dataset = LaneDataset(args.dataset_path, augment=True, img_size=(640, 384))
         loader = DataLoader(dataset, batch_size=4, shuffle=True)
     except Exception as e:
-        print(f"❌ Lỗi DataLoader: {e}")
+        print(f"Loi DataLoader: {e}")
         sys.exit(1)
 
     criterion = BCEDiceLoss() 
@@ -71,9 +71,9 @@ def train():
         if avg_loss < best_loss:
             best_loss = avg_loss
             torch.save(model.state_dict(), weights_path)
-            print(f"  ✅ Best model saved! (loss={best_loss:.4f})")
+            print(f"  Best model saved! (loss={best_loss:.4f})")
 
-    print(f"🎉 Training Done! Model saved as '{weights_path}'")
+    print(f"Training Done! Model saved as '{weights_path}'")
 
 if __name__ == "__main__":
     train()

@@ -1,0 +1,6 @@
+File hướng dẫntrain_road_log.txt
+train_lane_log.txt
+train_colab_log.txt
+
+.\venv_new\Scripts\python.exe train_lane.py --dataset_path LaneDataset
+.\venv_new\Scripts\python.exe train_colab.py --dataset_path Dataset

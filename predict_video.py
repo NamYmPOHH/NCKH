@@ -26,14 +26,14 @@ def main():
     args = parser.parse_args()
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print(f" Khởi tạo Render Video Dual-Model trên GPU: {device}")
+    print(f" Khoi tao Render Video Dual-Model tren GPU: {device}")
     
     MEAN = np.array([0.485, 0.456, 0.406])
     STD = np.array([0.229, 0.224, 0.225])
 
     # Nạp 2 mô hình (Đường + Vạch kẻ)
     if not os.path.exists(args.road_weights) or not os.path.exists(args.lane_weights):
-        print(" Thiếu model weights (road_model.pth hoặc lane_model.pth)!")
+        print(" Thieu model weights (road_model.pth hoac lane_model.pth)!")
         return
     
     road_model = RoadSegModel().to(device)
@@ -48,7 +48,7 @@ def main():
     # Đọc Video bằng OpenCV
     cap = cv2.VideoCapture(args.input)
     if not cap.isOpened():
-        print(f" Lỗi: Không thể đọc video tại {args.input}")
+        print(f" Loi: Khong the doc video tai {args.input}")
         return
 
     # Lấy thông số Video gốc
@@ -61,7 +61,7 @@ def main():
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     out_video = cv2.VideoWriter(args.output, fourcc, fps, (width, height))
     
-    print(f" Bắt đầu chạy FPS Inference ({width}x{height} - {fps}fps - Tổng {total_frames} frames)")
+    print(f" Bat dau chay FPS Inference ({width}x{height} - {fps}fps - Tong {total_frames} frames)")
     
     count = 0
     while cap.isOpened():
@@ -106,12 +106,12 @@ def main():
         count += 1
         # Báo cáo tiến độ sau mỗi 30 khung hình
         if count % 30 == 0:
-            print(f" Tiến độ: {count}/{total_frames} frames ({(count/total_frames)*100:.1f}%)")
+            print(f" Tien do: {count}/{total_frames} frames ({(count/total_frames)*100:.1f}%)")
 
     cap.release()
     out_video.release()
     print("=" * 50)
-    print(f" Xuất Video thành công!\n Hãy tải file '{args.output}' về máy để xem kết quả.")
+    print(f" Xuat Video thanh cong!\n Hay tai file '{args.output}' ve may de xem ket qua.")
     print("=" * 50)
 
 if __name__ == "__main__":

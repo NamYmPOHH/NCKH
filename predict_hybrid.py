@@ -31,7 +31,7 @@ def main():
     args = parser.parse_args()
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    print(f"🚀 Bắt đầu quá trình Dự đoán quy mô lớn trên: {device}")
+    print(f"Bat dau qua trinh Du doan quy mo lon tren: {device}")
     
     MEAN = np.array([0.485, 0.456, 0.406])
     STD = np.array([0.229, 0.224, 0.225])
@@ -49,7 +49,7 @@ def main():
     lane_model = LaneSegModel().to(device)
 
     if not os.path.exists(args.road_weights) or not os.path.exists(args.lane_weights):
-        print("❌ Thiếu file models. Vui lòng train đủ 2 models.")
+        print("Thieu file models. Vui long train du 2 models.")
         return
 
     road_model.load_state_dict(torch.load(args.road_weights, map_location=device))
@@ -92,7 +92,7 @@ def main():
             if (idx + 1) % 50 == 0:
                 print(f"Đã xử lý {idx+1}/{len(kitti_images)} ảnh KITTI...")
     else:
-        print(f"⚠️ Không tìm thấy thu mục {args.kitti_path}")
+        print(f"Khong tim thay thu muc {args.kitti_path}")
 
     # ==========================================
     # PHẦN 2 & 3: TEST VẠCH KẺ & TỔNG HỢP TRÊN KAGGLE
@@ -149,10 +149,10 @@ def main():
             if (idx + 1) % 50 == 0:
                 print(f"Đã ghép xong {idx+1}/{len(kaggle_images)} ảnh Kaggle...")
     else:
-        print(f"⚠️ Không tìm thấy thu mục {args.kaggle_path}")
+        print(f"Khong tim thay thu muc {args.kaggle_path}")
 
     print("=" * 60)
-    print(f"🎉 HOÀN TẤT KIỂM THỬ XUYÊN DỮ LIỆU! Các file được tổ chức tại:\n  - {result_road}\n  - {result_lane}\n  - {result_combined}")
+    print(f"HOAN TAT KIEM THU XUYEN DU LIEU! Cac file duoc to chuc tai:\n  - {result_road}\n  - {result_lane}\n  - {result_combined}")
     print("=" * 60)
 
 if __name__ == "__main__":
