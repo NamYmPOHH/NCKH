@@ -36,6 +36,10 @@ def main():
         print("Khong tim thay bat ky file log nao!")
         return
 
+    # Tao thu muc excel neu chua co
+    excel_dir = 'excel'
+    os.makedirs(excel_dir, exist_ok=True)
+
     root = tk.Tk()
     root.withdraw()
     root.attributes("-topmost", True)
@@ -43,9 +47,10 @@ def main():
     print("Dang mo hop thoai chon file...")
     output_file = filedialog.asksaveasfilename(
         title="Chon noi luu file Excel tong hop",
+        initialdir=os.path.abspath(excel_dir),
         defaultextension=".xlsx",
         filetypes=[("Excel files", "*.xlsx"), ("All files", "*.*")],
-        initialfile="Training_Summary_Sorted.xlsx"
+        initialfile="Training_Summary.xlsx"
     )
 
     if not output_file:
@@ -91,6 +96,9 @@ def main():
         print(f"File da duoc sap xep va luu tai: {output_file}")
         if road_df is not None: print(f"Road Min Loss: {road_df['Loss'].min()}")
         if lane_df is not None: print(f"Lane Min Loss: {lane_df['Loss'].min()}")
+        
+        # TU DONG MO FILE EXCEL LEN
+        os.startfile(output_file)
         
     except Exception as e:
         print(f"Loi khi luu file: {e}")

@@ -75,5 +75,12 @@ def train():
 
     print(f"Training Done! Model saved as '{weights_path}'")
 
+    # TU DONG GOI EXCEL EXPORT
+    import subprocess
+    try:
+        subprocess.run([sys.executable, "export_to_excel.py"])
+    except Exception as e:
+        print(f"Khong the mo Excel tu dong: {e}")
+
 if __name__ == "__main__":
     train()
