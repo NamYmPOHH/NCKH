@@ -97,10 +97,8 @@ def main():
                                 cv2.addWeighted(img_combined, 0.5, green_overlay, 0.5, 0), 
                                 img_combined)
         
-        # 2. Quét vạch Đỏ (Chỉ trong/gần rìa vùng xanh)
-        road_expanded = cv2.dilate(road_mask, kernel_dilate, iterations=5)
-        valid_lanes = (lane_mask_dilated == 1) & (road_expanded == 1)
-        img_combined[valid_lanes] = [0, 0, 255] # Red
+        # 2. Quét vạch Đỏ (Vẽ tất cả vạch tìm được)
+        img_combined[lane_mask_dilated == 1] = [0, 0, 255] # Red
 
         # Scale lại bằng 100% video gốc
         final_frame = cv2.resize(img_combined, (width, height))
